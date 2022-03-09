@@ -1,0 +1,5 @@
+requests
+cached_property
+requests-ip-rotator
+bs4
+pandas
