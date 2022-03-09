@@ -39,6 +39,9 @@ def main():
                     {'class': 'priceregister-address'}
                 ).text.strip().replace('\n', ' ').split()
             )
+            if address.startswith(', '):
+                address = address[2:]
+            address = address.replace(' ,', '')
             extra_details = [
                 i.strip() for i in result.find(
                     'span',
@@ -51,13 +54,13 @@ def main():
             if len(extra_details) == 5:
                 # FIXME super lazy, don't want to think about it
                 if 'bedrooms' in extra_details[3].lower():
-                    bedrooms = int(extra_details[3].lower().replace('bedrooms', '').strip())
+                    bedrooms = float(extra_details[3].lower().replace('bedrooms', '').strip())
                 if 'bedrooms' in extra_details[4].lower():
-                    bedrooms = int(extra_details[4].lower().replace('bedrooms', '').strip())
+                    bedrooms = float(extra_details[4].lower().replace('bedrooms', '').strip())
                 if 'bathrooms' in extra_details[3].lower():
-                    bathrooms = int(extra_details[3].lower().replace('bathrooms', '').strip())
+                    bathrooms = float(extra_details[3].lower().replace('bathrooms', '').strip())
                 if 'bathrooms' in extra_details[4].lower():
-                    bathrooms = int(extra_details[4].lower().replace('bathrooms', '').strip())
+                    bathrooms = float(extra_details[4].lower().replace('bathrooms', '').strip())
                 sale = DaftSale(
                     address=address,
                     price=extra_details[0],
@@ -68,9 +71,9 @@ def main():
                 )
             elif len(extra_details) == 4:
                 if 'bedrooms' in extra_details[3].lower():
-                    bedrooms = int(extra_details[3].lower().replace('bedrooms', '').strip())
+                    bedrooms = float(extra_details[3].lower().replace('bedrooms', '').strip())
                 if 'bathrooms' in extra_details[3].lower():
-                    bathrooms = int(extra_details[3].lower().replace('bathrooms', '').strip())
+                    bathrooms = float(extra_details[3].lower().replace('bathrooms', '').strip())
                 sale = DaftSale(
                     address=address,
                     price=extra_details[0],

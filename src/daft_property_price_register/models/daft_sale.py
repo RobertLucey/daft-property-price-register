@@ -119,22 +119,13 @@ class DaftSale():
         self.price = kwargs.get('price', None)
         self.not_full_market_price = '**' in kwargs.get('price', '') if isinstance(kwargs['price'], str) else kwargs['not_full_market_price']
         if self.price is not None and isinstance(self.price, str):
-            self.price = int(self.price.replace(',', '').replace('â\x82¬', '').replace('€', '').replace(' **', ''))  # NOTE: ** means not full market price, factor this in at some point
+            self.price = int(self.price.replace(',', '').replace('â\x82¬', '').replace('€', '').replace(' **', ''))
         self.date = kwargs.get('date', None)
         self.property_type = kwargs.get('property_type', None) if not isnan(kwargs.get('property_type', None)) else None
 
         self.bedrooms = kwargs.get('bedrooms', None)
         self.bathrooms = kwargs.get('bathrooms', None)
 
-        # save and then remove
-
-        ## TODO: Fixme, these can be mixed up. Need to fix in scraping too
-        #self.bedrooms = kwargs.get('bedrooms', None) if not isnan(kwargs.get('bedrooms', None)) else None
-        #if self.bedrooms is not None:
-        #    self.bedrooms = int(self.bedrooms.lower().replace(' bedrooms', '').replace(' bedroom', ''))
-        #self.bathrooms = kwargs.get('bathrooms', None) if not isnan(kwargs.get('bathrooms', None)) else None
-        #if self.bathrooms is not None:
-        #    self.bathrooms = int(self.bathrooms.lower().replace(' bathrooms', '').replace(' bathroom', ''))
 
     @staticmethod
     def parse(data):
