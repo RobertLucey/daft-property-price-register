@@ -25,7 +25,7 @@ def main():
         data = []
         existing_hashes = set()
 
-    for page_num in range(100, 20000):
+    for page_num in range(20000):
         print('Page #%s' % (page_num))
         source = urlopen(DAFT_URL.format(page_num=page_num))
         soup = bs4.BeautifulSoup(source, 'html.parser')
