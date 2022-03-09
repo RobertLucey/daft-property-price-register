@@ -118,7 +118,7 @@ class DaftSale():
         self.address = kwargs.get('address', None)
         self.price = kwargs.get('price', None)
         self.not_full_market_price = '**' in kwargs.get('price', '') if isinstance(kwargs['price'], str) else kwargs['not_full_market_price']
-        if self.price is not None:
+        if self.price is not None and isinstance(self.price, str):
             self.price = int(self.price.replace(',', '').replace('â\x82¬', '').replace('€', '').replace(' **', ''))  # NOTE: ** means not full market price, factor this in at some point
         self.date = kwargs.get('date', None)
         self.property_type = kwargs.get('property_type', None) if not isnan(kwargs.get('property_type', None)) else None
