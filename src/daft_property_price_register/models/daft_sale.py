@@ -1,3 +1,4 @@
+import datetime
 import hashlib
 import os
 import glob
@@ -126,6 +127,12 @@ class DaftSale():
         self.bedrooms = kwargs.get('bedrooms', None)
         self.bathrooms = kwargs.get('bathrooms', None)
 
+    @property
+    def timestamp(self):
+        return datetime.datetime.strptime(
+            self.date,
+            '%d/%m/%Y'
+        )
 
     @staticmethod
     def parse(data):
