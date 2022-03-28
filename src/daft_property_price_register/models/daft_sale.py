@@ -117,15 +117,45 @@ class DaftSale():
 
     def __init__(self, **kwargs):
         self.address = kwargs.get('address', None)
-        self.price = kwargs.get('price', None)
         self.not_full_market_price = '**' in kwargs.get('price', '') if isinstance(kwargs['price'], str) else kwargs['not_full_market_price']
-        if self.price is not None and isinstance(self.price, str):
-            self.price = int(self.price.replace(',', '').replace('â\x82¬', '').replace('€', '').replace(' **', ''))
         self.date = kwargs.get('date', None)
         self.property_type = kwargs.get('property_type', None) if not isnan(kwargs.get('property_type', None)) else None
 
-        self.bedrooms = kwargs.get('bedrooms', None)
-        self.bathrooms = kwargs.get('bathrooms', None)
+        self._price = kwargs.get('price', None)
+        self._bedrooms = kwargs.get('bedrooms', None)
+        self._bathrooms = kwargs.get('bathrooms', None)
+
+    @property
+    def price(self):
+        if self._price is not None and isinstance(self._price, str):
+            return int(self._price.replace(',', '').replace('â\x82¬', '').replace('€', '').replace(' **', ''))
+        return self._price
+
+    @property
+    def bedrooms(self):
+        if isnan(self._bedrooms) or self._bedrooms is None:
+            return None
+
+        if isinstance(self._bedrooms, str):
+            if 'Bedrooms' in self._bedrooms:
+                return float(self._bedrooms.replace('Bedrooms', '').strip())
+            elif 'Bedroom' in self._bedrooms:
+                return float(self._bedrooms.replace('Bedroom', '').strip())
+
+        return float(self._bedrooms)
+
+    @property
+    def bathrooms(self):
+        if isnan(self._bathrooms) or self._bathrooms is None:
+            return None
+
+        if isinstance(self._bathrooms, str):
+            if 'Bathrooms' in self._bathrooms:
+                return float(self._bathrooms.replace('Bathrooms', '').strip())
+            elif 'Bathroom' in self._bathrooms:
+                return float(self._bathrooms.replace('Bathroom', '').strip())
+
+        return float(self._bathrooms)
 
     @property
     def timestamp(self):
