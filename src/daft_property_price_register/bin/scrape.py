@@ -72,14 +72,17 @@ def main():
             elif len(extra_details) == 4:
                 if 'bedrooms' in extra_details[3].lower():
                     bedrooms = float(extra_details[3].lower().replace('bedrooms', '').strip())
+
                 if 'bathrooms' in extra_details[3].lower():
                     bathrooms = float(extra_details[3].lower().replace('bathrooms', '').strip())
+
                 sale = DaftSale(
                     address=address,
                     price=extra_details[0],
                     date=extra_details[1],
                     property_type=extra_details[2],
-                    bedrooms=extra_details[3],
+                    bedrooms=bedrooms,
+                    bathrooms=bathrooms
                 )
             elif len(extra_details) == 3:
                 sale = DaftSale(
@@ -98,6 +101,9 @@ def main():
         if page_num % 100 == 0:
             df = pandas.DataFrame([d.serialize() for d in data])
             df.to_csv('/tmp/daft.csv')
+
+    df = pandas.DataFrame([d.serialize() for d in data])
+    df.to_csv('/tmp/daft.csv')
 
     import pdb; pdb.set_trace()
     pass
